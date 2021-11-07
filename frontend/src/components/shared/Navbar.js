@@ -7,7 +7,8 @@ const Navbar = () => {
     return (
         <Fragment>
             <nav className='flex bg-gradient-to-r from-green-300 to-blue-400 py-3'>
-                <div className='flex container px-4 mx-auto flex flex-wrap items-center justify-between'>
+                <div className='container'>
+                <div className='flex mx-auto flex flex-wrap items-center justify-between'>
                     <div className='realtive flex w-full justify-between lg:w-auto lg:static lg:block lg:justify-start'>
                         <Link to='/' className='text-black uppercase tracking-wider font-semibold'>wellness app</Link>
                     
@@ -22,7 +23,10 @@ const Navbar = () => {
                     <div className={"lg:flex flex-grow items-center" + (navbarOpen ? " block" : " hidden")}>
                         <ul className='flex flex-col lg:flex-row list-none lg:ml-auto'>
                             <li className='text-center my-2 lg:my-0 border-2 border-black lg:border-none py-2 lg:p-0'>
-                                <Link className='px-3 hover:text-white' to='/booking' >Booking</Link>
+                                <Link className='px-3 hover:text-white' to='/company/booking' >Booking</Link>
+                            </li>
+                            <li className='text-center my-2 lg:my-0 border-2 border-black lg:border-none py-2 lg:p-0'>
+                                <Link className='px-3 hover:text-white' to='/vendor/booking' >Booking</Link>
                             </li>
                             <li className='text-center my-2 lg:my-0 border-2 border-black lg:border-none py-2 lg:p-0'>
                                 <Link className='px-3 hover:text-white' to='/login' >Login</Link>
@@ -32,7 +36,8 @@ const Navbar = () => {
                             </li>
                         </ul>
                     </div>                  
-                </div>              
+                </div>
+                </div>           
             </nav>
         </Fragment>
     );
