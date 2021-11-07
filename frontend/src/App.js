@@ -2,6 +2,7 @@ import { Fragment } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 
 import Navbar from './components/shared/Navbar';
+import LandingPage from './components/pages/LandingPage';
 import Booking from './components/pages/Booking';
 // import BookingDetail from './componets/pages/BookingDetail';
 
@@ -14,7 +15,7 @@ function App() {
         <Navbar />
         <div className="container">
           <Switch>
-            <Route exact path='/' />
+            <Route exact path='/' component={LandingPage}/>
             <Route exact path='/booking' component={Booking}/>
             {/* <Route path="/booking/:id" component={BookingDetail} /> */}
             <Redirect to="/" /> 
