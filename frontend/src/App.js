@@ -4,9 +4,10 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-d
 import Navbar from './components/shared/Navbar';
 import LandingPage from './components/pages/LandingPage';
 import Login from './components/pages/Login';
-import Booking from './components/pages/Booking';
-import VendorBooking from './components/pages/VendorBooking';
-// import BookingDetail from './componets/pages/BookingDetail';
+import CompanyBooking from './components/pages/companyBooking/List';
+import CompanyBookingCreate from './components/pages/companyBooking/Create';
+import CompanyBookingDetail from './components/pages/companyBooking/Detail';
+import VendorBooking from './components/pages/vendorBooking/List';
 
 import './App.css';
 
@@ -19,7 +20,9 @@ function App() {
           <Switch>
             <Route exact path='/' component={LandingPage}/>
             <Route exact path='/login' component={Login}/>
-            <Route exact path='/company/booking' component={Booking}/>
+            <Route exact path='/company/booking' component={CompanyBooking}/>
+            <Route exact path='/company/booking/:id' component={CompanyBookingDetail}/>
+            <Route exact path='/company/booking/create' component={CompanyBookingCreate}/>
             <Route exact path='/vendor/booking' component={VendorBooking}/>
             {/* <Route path="/booking/:id" component={BookingDetail} /> */}
             <Redirect to="/" /> 

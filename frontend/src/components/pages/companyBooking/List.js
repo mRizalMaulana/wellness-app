@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import MainLayout from "../shared/MainLayout";
+import MainLayout from "../../shared/MainLayout";
 import { Link } from "react-router-dom";
 import axios from 'axios';
 
-const VendorBooking = () => {
+const List = () => {
     const [booking, setBooking] = useState([]);
 
     const fetchBooking = async () => {
@@ -11,14 +11,17 @@ const VendorBooking = () => {
         setBooking(data);
     }
 
-    console.log(booking);
     useEffect(() => {
         fetchBooking();
     }, [])
 
     return (
         <MainLayout title="Booking">
-            <div className="mt-5 p-5 bg-white rounded shadow-lg">                
+            <div className="mt-5 p-5 bg-white rounded shadow-lg">
+                <div className="flex">
+                    <Link to='/booking/create' className="rounded py-2 ml-auto px-4 bg-gradient-to-r from-green-300 to-blue-400 hover:from-blue-400 hover:to-green-300 hover:text-white"> Create New </Link>
+                </div>
+                
                 <div className="border border-gray-200 shadow mt-4 overflow-x-auto">
                     <table className="divide-y divide-gray-300 w-full">
                         <thead className="bg-gray-50">
@@ -84,4 +87,4 @@ const VendorBooking = () => {
     );
 }
 
-export default VendorBooking;
+export default List;
