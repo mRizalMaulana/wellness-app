@@ -7,7 +7,7 @@
     "start": "nodemon backend/server",
     "frontend": "npm start --prefix frontend",
     "dev": "concurrently \"npm start\" \"npm run frontend\"",
-    "set-both": "npm install && npm install --prefix frontend"
+    "set-up": "npm install && npm install --prefix frontend"
   },
   "author": "Rizal M.",
   "license": "ISC",
