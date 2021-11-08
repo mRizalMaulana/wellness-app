@@ -23,7 +23,7 @@ const Booking = () => {
                     <Link to='/booking/create' className="rounded py-2 ml-auto px-4 bg-gradient-to-r from-green-300 to-blue-400 hover:from-blue-400 hover:to-green-300 hover:text-white"> Create New </Link>
                 </div>
                 
-                <div className="border border-gray-200 shadow mt-4">
+                <div className="border border-gray-200 shadow mt-4 overflow-x-auto">
                     <table className="divide-y divide-gray-300 w-full">
                         <thead className="bg-gray-50">
                             <tr>

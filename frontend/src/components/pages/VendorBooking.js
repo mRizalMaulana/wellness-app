@@ -19,7 +19,7 @@ const VendorBooking = () => {
     return (
         <MainLayout title="Booking">
             <div className="mt-5 p-5 bg-white rounded shadow-lg">                
-                <div className="border border-gray-200 shadow mt-4">
+                <div className="border border-gray-200 shadow mt-4 overflow-x-auto">
                     <table className="divide-y divide-gray-300 w-full">
                         <thead className="bg-gray-50">
                             <tr>
