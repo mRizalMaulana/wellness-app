@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import MainLayout from "../../shared/MainLayout";
 import { Link } from "react-router-dom";
-import axios from 'axios';
+// import axios from 'axios';
 
 const Create = () => {
-    const [booking, setBooking] = useState([]);
+    // const [booking, setBooking] = useState([]);
 
     return (
         <MainLayout title="Create Booking">
@@ -39,33 +39,33 @@ const Create = () => {
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-300 text-center">
                             {
-                                booking.map((data) => (
-                                    <tr key={data._id} className="whitespace-nowrap">
-                                        <td className="px-6 py-4 text-sm text-gray-500">
-                                            {data._id}
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <div className="text-sm text-gray-900">
-                                                {data.event}
-                                            </div>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <div className="text-sm text-gray-500">{data.vendor}</div>
-                                        </td>
-                                        <td className="px-6 py-4 text-sm  text-gray-500">
-                                            {data.confirm_at}
-                                        </td>
-                                        <td className="px-6 py-4 text-sm  text-gray-500">
-                                            {data.status}
-                                        </td>
-                                        <td className="px-6 py-4 text-sm  text-gray-500">
-                                            {data.created_at}
-                                        </td>
-                                        <td className="px-6 py-4 ">
-                                            <Link to={`/booking/${data._id}`} className="px-4  py-1 text-sm text-blue-600 bg-blue-200 rounded-full">See Detail</Link>
-                                        </td> 
-                                    </tr>
-                                ))
+                                // booking.map((data) => (
+                                //     <tr key={data._id} className="whitespace-nowrap">
+                                //         <td className="px-6 py-4 text-sm text-gray-500">
+                                //             {data._id}
+                                //         </td>
+                                //         <td className="px-6 py-4">
+                                //             <div className="text-sm text-gray-900">
+                                //                 {data.event}
+                                //             </div>
+                                //         </td>
+                                //         <td className="px-6 py-4">
+                                //             <div className="text-sm text-gray-500">{data.vendor}</div>
+                                //         </td>
+                                //         <td className="px-6 py-4 text-sm  text-gray-500">
+                                //             {data.confirm_at}
+                                //         </td>
+                                //         <td className="px-6 py-4 text-sm  text-gray-500">
+                                //             {data.status}
+                                //         </td>
+                                //         <td className="px-6 py-4 text-sm  text-gray-500">
+                                //             {data.created_at}
+                                //         </td>
+                                //         <td className="px-6 py-4 ">
+                                //             <Link to={`/booking/${data._id}`} className="px-4  py-1 text-sm text-blue-600 bg-blue-200 rounded-full">See Detail</Link>
+                                //         </td> 
+                                //     </tr>
+                                // ))
                             }
                         </tbody>
                     </table>

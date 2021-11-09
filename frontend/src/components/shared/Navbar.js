@@ -1,9 +1,27 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
     const [navbarOpen, setNavbarOpen] = useState(false);
+    const [companyUser, setCompanyUser] = useState(false);
+    const [vendorUser, setVendorUser] = useState(false);
 
+    useEffect(()=> {
+        const dataCompanyUser = localStorage.getItem('companyUser');
+        const dataVendorUser = localStorage.getItem('vendorUser');
+
+        if (dataCompanyUser) {
+            setCompanyUser(true);
+        }
+
+        if (dataVendorUser) {
+            setVendorUser(true);
+        }
+        
+    },[]);
+    // const companyUser = localStorage.getItem('companyUser');
+    // const vendorUser = localStorage.getItem('vendorUser');
+        
     return (
         <Fragment>
             <nav className='flex bg-gradient-to-r from-green-300 to-blue-400 py-3'>
@@ -22,18 +40,37 @@ const Navbar = () => {
 
                     <div className={"lg:flex flex-grow items-center" + (navbarOpen ? " block" : " hidden")}>
                         <ul className='flex flex-col lg:flex-row list-none lg:ml-auto'>
-                            <li className='text-center my-2 lg:my-0 border-2 border-black lg:border-none py-2 lg:p-0'>
-                                <Link className='px-3 hover:text-white' to='/company/booking' >Booking</Link>
-                            </li>
-                            <li className='text-center my-2 lg:my-0 border-2 border-black lg:border-none py-2 lg:p-0'>
-                                <Link className='px-3 hover:text-white' to='/vendor/booking' >Booking</Link>
-                            </li>
-                            <li className='text-center my-2 lg:my-0 border-2 border-black lg:border-none py-2 lg:p-0'>
-                                <Link className='px-3 hover:text-white' to='/login' >Login</Link>
-                            </li>
-                            <li className='text-center my-2 lg:my-0 border-2 border-black lg:border-none py-2 lg:p-0'>
-                                <Link className='px-3 hover:text-white' to='/logout'>Logout</Link>
-                            </li>
+                            {
+                                companyUser && 
+                                <li className='text-center my-2 lg:my-0 border-2 border-black lg:border-none py-2 lg:p-0'>
+                                    <Link className='px-3 hover:text-white' to='/company/booking' >Booking</Link>
+                                </li>
+                            }
+                            
+                            {
+                                vendorUser &&
+                                <li className='text-center my-2 lg:my-0 border-2 border-black lg:border-none py-2 lg:p-0'>
+                                    <Link className='px-3 hover:text-white' to='/vendor/booking' >Booking</Link>
+                                </li>
+                            }
+                            
+                            {
+                                !companyUser &&
+                                <li className='text-center my-2 lg:my-0 border-2 border-black lg:border-none py-2 lg:p-0'>
+                                    <Link className='px-3 hover:text-white' to='/login' >Login</Link>
+                                </li>
+                            }
+                            
+                            {
+                                companyUser && 
+                                <li className='text-center my-2 lg:my-0 border-2 border-black lg:border-none py-2 lg:p-0'>
+                                    <Link to='/' className='px-3 hover:text-white' onClick={()=> {
+                                        localStorage.removeItem('companyUser');
+                                        // history.push('/');
+                                        }}>Logout</Link>
+                                </li>
+                            }
+                            
                         </ul>
                     </div>                  
                 </div>

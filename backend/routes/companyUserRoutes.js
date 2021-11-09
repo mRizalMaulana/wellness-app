@@ -2,6 +2,6 @@ const express = require('express');
 const { login } = require('../controllers/companyUserController');
 const router = express.Router();
 
-router.route('/').post(login);
+router.route('/login').post(login);
 
 module.exports = router;

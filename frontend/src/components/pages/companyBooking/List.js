@@ -5,9 +5,10 @@ import axios from 'axios';
 
 const List = () => {
     const [booking, setBooking] = useState([]);
-
+    const baseUrl = process.env.BACKEND_HOST || "http://localhost:5000";
+    
     const fetchBooking = async () => {
-        const {data} = await axios.get('/api/booking');
+        const {data} = await axios.get(baseUrl+'/api/booking');
         setBooking(data);
     }
 
