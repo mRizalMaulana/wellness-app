@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 import MainLayout from "../../shared/MainLayout";
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const List = () => {
     const [booking, setBooking] = useState([]);
-    const baseUrl = process.env.BACKEND_HOST || "http://localhost:5000";
+    const baseUrl = process.env.REACT_APP_BACKEND_HOST;
     
     const fetchBooking = async () => {
         const {data} = await axios.get(baseUrl+'/api/booking');

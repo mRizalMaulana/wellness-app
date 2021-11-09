@@ -1,5 +1,8 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import axios from 'axios';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const Login = ({history}) => {
     const [email, setEmail] = useState('');
@@ -21,7 +24,7 @@ const Login = ({history}) => {
     // const { email, password } = user;
 
     // const onChange = e => setUser({...user, [e.target.name]: e.target.value});
-    const baseUrl = process.env.BACKEND_HOST || "http://localhost:5000";
+    const baseUrl = process.env.REACT_APP_BACKEND_HOST;
     const onSubmit = async (e) => {
         e.preventDefault();
 
