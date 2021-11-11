@@ -1,64 +1,30 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import axios from 'axios';
-import dotenv from 'dotenv';
+import { useDispatch, useSelector } from 'react-redux';
+import { companyUserLogin } from '../../actions/user';
 
-dotenv.config();
+import Message from '../shared/MessageLayouts/DefaultMessage';
+
 
 const Login = ({history}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState(''); 
-    const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
+
+    const dispatch = useDispatch();
+
+    const userLogin = useSelector((state) => state.userLogin);
+    const { loading, error, companyUser} = userLogin;
 
     useEffect(()=> {
-        const user = localStorage.getItem('companyUser');
-        if (user) {
+        if (companyUser) {
             history.push('/company/booking');
         }
-    },[history]);
-    // const [user, setUser] = useState({
-    //     email: '',
-    //     password: ''
-    // });
+    },[history, companyUser]);
 
-    // const { email, password } = user;
-
-    // const onChange = e => setUser({...user, [e.target.name]: e.target.value});
-    const baseUrl = process.env.REACT_APP_BACKEND_HOST;
     const onSubmit = async (e) => {
         e.preventDefault();
 
-        try {
-            const config = {
-                headers: {
-                    "Content-type":"application/json"
-                }
-            }
-            setError(false);
-            setLoading(true);
+        dispatch(companyUserLogin(email, password))
 
-            // const data = await fetch(`${baseUrl}/api/company-user/login`,{
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json'
-            //     },
-            //     body: {email: email, password: password}
-            // });
-
-            const {data} = await axios.post(`${baseUrl}/api/company-user/login`, {
-                email,
-                password
-            }, config);
-
-            console.log(data);
-            localStorage.setItem('companyUser',JSON.stringify(data));
-
-            setLoading(false);
-            history.push('/company/booking');
-        } catch (err) {
-            setError(err.response.data.message);
-            setLoading(false);
-        }
     }
 
     return (
@@ -70,13 +36,7 @@ const Login = ({history}) => {
                     </div>
 
                         {
-                            error && 
-
-                            <div className='px-5 mt-2'>
-                                <label className='block text-center bg-red-400 w-full text-white py-2'>
-                                    {error}
-                                </label>
-                            </div>
+                            error && <Message messagetype="error" message={error}/>
                         }
 
                     <form onSubmit={onSubmit} className='my-3'>
@@ -102,9 +62,9 @@ const Login = ({history}) => {
                         </div>
 
                         <div className='px-5 my-5'>
-                            <button type="submit" className='rounded py-2 text-center text-black w-full bg-gradient-to-r 
-                            from-green-300 to-blue-400 hover:from-blue-400 hover:to-green-300 hover:text-white' disabled={loading}>
-                                {loading && <i className="fa fa-spinner animate-spin" aria-hidden="true"></i>} 
+                            <button type="submit" className={`rounded py-2 text-center text-black w-full bg-gradient-to-r 
+                            from-green-300 to-blue-400 hover:from-blue-400 hover:to-green-300 hover:text-white ${loading && 'cursor-wait'}`} disabled={loading}>
+                                {loading && <i className="fa fa-spinner animate-spin mr-2" aria-hidden="true"></i>} 
                                  Login
                             </button>
                         </div>

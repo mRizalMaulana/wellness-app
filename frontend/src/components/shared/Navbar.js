@@ -1,27 +1,25 @@
 import React, {Fragment, useState, useEffect} from 'react';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
+import { logout } from '../../actions/user';
 
 const Navbar = () => {
     const [navbarOpen, setNavbarOpen] = useState(false);
-    const [companyUser, setCompanyUser] = useState(false);
-    const [vendorUser, setVendorUser] = useState(false);
+     
+    const history = useHistory();
+    
+    const dispatch = useDispatch();
 
-    useEffect(()=> {
-        const dataCompanyUser = localStorage.getItem('companyUser');
-        const dataVendorUser = localStorage.getItem('vendorUser');
+    const userLogin = useSelector(state => state.userLogin);
+    const { companyUser, vendorUser } = userLogin;
 
-        if (dataCompanyUser) {
-            setCompanyUser(true);
-        }
+    const logoutHandler = () => {
+        dispatch(logout());
+        history.push('/');  
+    }
 
-        if (dataVendorUser) {
-            setVendorUser(true);
-        }
-        
-    },[]);
-    // const companyUser = localStorage.getItem('companyUser');
-    // const vendorUser = localStorage.getItem('vendorUser');
-        
+    useEffect(() => {}, [companyUser, vendorUser]);
+            
     return (
         <Fragment>
             <nav className='flex bg-gradient-to-r from-green-300 to-blue-400 py-3'>
@@ -64,10 +62,7 @@ const Navbar = () => {
                             {
                                 companyUser && 
                                 <li className='text-center my-2 lg:my-0 border-2 border-black lg:border-none py-2 lg:p-0'>
-                                    <Link to='/' className='px-3 hover:text-white' onClick={()=> {
-                                        localStorage.removeItem('companyUser');
-                                        // history.push('/');
-                                        }}>Logout</Link>
+                                    <button className='px-3 hover:text-white' onClick={logoutHandler}>Logout</button>
                                 </li>
                             }
                             
