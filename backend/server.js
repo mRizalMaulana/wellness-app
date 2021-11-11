@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
+
+const vendorRoutes = require('./routes/vendorRoutes');
 const companyUserRoutes = require('./routes/companyUserRoutes'); 
 
 const app = express();
@@ -17,6 +19,8 @@ const { notFound, errorHandler } = require('./middleware/error');
 app.get('/', (req, res) => {
     res.send("Wellness app backend is running...");
 });
+
+app.use('/api/vendors', vendorRoutes);
 
 app.get('/api/booking', (req, res) => {
     res.json(sample);
