@@ -4,6 +4,8 @@ const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 
 const vendorRoutes = require('./routes/vendorRoutes');
+const vendorUserRoutes = require('./routes/vendorUserRoutes');
+
 const companyUserRoutes = require('./routes/companyUserRoutes'); 
 
 const app = express();
@@ -21,6 +23,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/vendors', vendorRoutes);
+app.use('/api/vendors/user', vendorUserRoutes);
 
 app.get('/api/booking', (req, res) => {
     res.json(sample);
