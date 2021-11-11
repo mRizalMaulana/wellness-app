@@ -8,6 +8,7 @@ import CompanyBooking from './components/pages/companyBooking/List';
 import CompanyBookingCreate from './components/pages/companyBooking/Create';
 import CompanyBookingDetail from './components/pages/companyBooking/Detail';
 import VendorBooking from './components/pages/vendorBooking/List';
+import PrivateRoute from './components/shared/PrivateRoute';
 
 import './App.css';
 
@@ -20,10 +21,10 @@ function App() {
           <Switch>
             <Route exact path='/' component={LandingPage}/>
             <Route exact path='/login' component={Login}/>
-            <Route exact path='/company/booking' component={CompanyBooking}/>
-            <Route exact path='/company/booking/:id' component={CompanyBookingDetail}/>
-            <Route exact path='/company/booking/create' component={CompanyBookingCreate}/>
-            <Route exact path='/vendor/booking' component={VendorBooking}/>
+            <PrivateRoute exact path='/company/booking' component={CompanyBooking}/>
+            <PrivateRoute exact path='/company/booking/:id' component={CompanyBookingDetail}/>
+            <PrivateRoute exact path='/company/booking/create' component={CompanyBookingCreate}/>
+            <PrivateRoute exact path='/vendor/booking' component={VendorBooking}/>
             {/* <Route path="/booking/:id" component={BookingDetail} /> */}
             <Redirect to="/" /> 
           </Switch>
