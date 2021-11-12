@@ -6,6 +6,8 @@ const connectDB = require('./config/db');
 const vendorRoutes = require('./routes/vendorRoutes');
 const vendorUserRoutes = require('./routes/vendorUserRoutes');
 
+const companyRoutes = require('./routes/companyRoutes');
+
 const companyUserRoutes = require('./routes/companyUserRoutes'); 
 
 const app = express();
@@ -22,8 +24,10 @@ app.get('/', (req, res) => {
     res.send("Wellness app backend is running...");
 });
 
-app.use('/api/vendors', vendorRoutes);
-app.use('/api/vendors/user', vendorUserRoutes);
+app.use('/api/vendor', vendorRoutes);
+app.use('/api/vendor/user', vendorUserRoutes);
+
+app.use('/api/company', companyRoutes);
 
 app.get('/api/booking', (req, res) => {
     res.json(sample);
