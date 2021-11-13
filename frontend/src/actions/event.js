@@ -2,7 +2,7 @@ import {
     EVENT_LIST_REQUEST,
     EVENT_LIST_SUCCESS,
     EVENT_LIST_FAIL
-} from "../constants/vendor"
+} from "../constants/event"
 import axios from 'axios';
 import dotenv from 'dotenv';
 

@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import { Link } from "react-router-dom";
+
 import { VendorList } from '../../../actions/vendor';
- 
+import { EventList } from "../../../actions/event";
+import { StoreBooking } from "../../../actions/booking"; 
+
 import MainLayout from "../../shared/MainLayout";
 
-const Create = () => {
+const Create = ({history}) => {
     const [paramEvent, setParamEvent] = useState('');
     const [paramVendor, setParamVendor] = useState('');
-    const [paramCompany, setParamCompany] = useState('');
     const [paramDate1, setParamDate1] = useState('');
     const [paramDate2, setParamDate2] = useState('');
     const [paramDate3, setParamDate3] = useState('');
@@ -20,6 +21,9 @@ const Create = () => {
     const vendorList = useSelector((state) => state.vendorList);
     const { loading, vendor, error } = vendorList;
 
+    const eventList = useSelector((state) => state.eventList);
+    const { loadingEvent, event, errorEvent } = eventList;
+
     let vendorOptions = [];
     if (!loading && !error) {
         vendorOptions = vendor.map((e)=>{
@@ -27,27 +31,51 @@ const Create = () => {
            });
     }
 
+    let eventOptions = [];
+    if (!loadingEvent && !errorEvent) {
+        eventOptions = event.map((e)=>{
+            return { value: e._id, label: e.name }
+           });
+    }
+
     const userLogin = useSelector(state => state.userLogin);   
     const { companyUser } = userLogin;
+    let company_id = '';
+    if (companyUser) {
+        company_id = companyUser.company_id
+    }
 
-    // if (companyUser) {
-    //     setParamCompany(companyUser.company_id);
-    // }
-
-    console.log(companyUser);
-
-    const options = [
-        { value: 'chocolate', label: 'Chocolate' },
-        { value: 'strawberry', label: 'Strawberry' },
-        { value: 'vanilla', label: 'Vanilla' }
-      ]
-
-    console.log(vendor);
-    console.log(vendorOptions);
     useEffect(() => {
         dispatch(VendorList())
+        dispatch(EventList())
 
     }, [dispatch]);
+
+    const reset = () => {
+        setParamEvent('');
+        setParamVendor('');
+        setParamDate1('');
+        setParamDate2('');
+        setParamDate3('');
+        setParamLocation('');
+    }
+
+    const onSubmit = async (e) => {
+        e.preventDefault();
+
+        dispatch(StoreBooking(
+            paramEvent, 
+            paramVendor, 
+            company_id, 
+            paramLocation,
+            paramDate1,
+            paramDate2,
+            paramDate3
+        ));
+
+        reset();
+        history.push('/company/booking');
+    }
 
     return (
         <MainLayout title="Create Booking">
@@ -56,8 +84,8 @@ const Create = () => {
                     <Link to='/company/booking' className="rounded py-2 ml-auto px-6 bg-gradient-to-r from-green-300 to-blue-400 hover:from-blue-400 hover:to-green-300 hover:text-white"> Cancel </Link>
                 </div>
 
-                <form>
-                    <div class="grid grid-cols-2">
+                <form onSubmit={onSubmit}>
+                    <div className="grid grid-cols-2">
                         <div className='flex flex-wrap justify-center content-center'>
                             <div className='w-11/12'>
                                 <div className='mt-2'>
@@ -68,8 +96,8 @@ const Create = () => {
                                             focus:ring focus:ring-indigo-200 focus:ring-opacity-50' value={paramEvent} onChange={(e) => setParamEvent(e.target.value)}>
                                                 <option value='' disabled hidden>-- Select Event --</option> 
                                             { 
-                                                vendorOptions &&
-                                                vendorOptions.map((option) => (
+                                                eventOptions &&
+                                                eventOptions.map((option) => (
                                                 <option key={option.value} value={option.value}>{option.label}</option>  
                                                 )) 
                                             }
@@ -96,7 +124,7 @@ const Create = () => {
 
                                 <div className='mt-2'>
                                     <label className="block">
-                                        <span claclassNamess="text-gray-700">Address Location</span>
+                                        <span className="text-gray-700">Address Location</span>
                                         <textarea name="location" className="
                                             mt-1
                                             block
@@ -115,7 +143,7 @@ const Create = () => {
                             <div className='w-11/12'>
                                 <div className='mt-2'>
                                     <label className="block">
-                                        <span class="text-gray-700">Proposed Date 1</span>
+                                        <span className="text-gray-700">Proposed Date 1</span>
                                         <input name='date1' type="date" className="mt-1 block w-full rounded-md
                                             border-gray-300 shadow-sm focus:border-indigo-300
                                             focus:ring focus:ring-indigo-200 focus:ring-opacity-50                                        
@@ -125,7 +153,7 @@ const Create = () => {
 
                                 <div className='mt-2'>
                                     <label className="block">
-                                        <span class="text-gray-700">Proposed Date 2</span>
+                                        <span className="text-gray-700">Proposed Date 2</span>
                                         <input name='date2' type="date" className="mt-1 block w-full rounded-md
                                             border-gray-300 shadow-sm focus:border-indigo-300
                                             focus:ring focus:ring-indigo-200 focus:ring-opacity-50                                        
@@ -135,7 +163,7 @@ const Create = () => {
 
                                 <div className='mt-2'>
                                     <label className="block">
-                                        <span class="text-gray-700">Proposed Date 3</span>
+                                        <span className="text-gray-700">Proposed Date 3</span>
                                         <input name='date3' type="date" className="mt-1 block w-full rounded-md
                                             border-gray-300 shadow-sm focus:border-indigo-300
                                             focus:ring focus:ring-indigo-200 focus:ring-opacity-50                                        
