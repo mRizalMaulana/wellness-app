@@ -38,8 +38,6 @@ app.get('/api/booking/:id', (req, res) => {
     res.json(data);
 });
 
-// app.use('/api/company-user', companyUserRoutes);
-
 app.use(notFound);
 app.use(errorHandler);
 

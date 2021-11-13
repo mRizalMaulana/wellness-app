@@ -2,9 +2,11 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { userLoginReducer } from './reducers/user';
+import { vendorListReducer } from './reducers/booking';
 
 const reducer = combineReducers({
-    userLogin: userLoginReducer
+    userLogin: userLoginReducer,
+    vendorList: vendorListReducer
 });
 
 const companyUserFromStorage = localStorage.getItem('companyUser') ? JSON.parse(localStorage.getItem('companyUser')) : null;

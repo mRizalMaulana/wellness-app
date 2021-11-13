@@ -45,7 +45,7 @@ const login = asyncHandler(async (req, res) => {
     }
 
     jwt.sign(payload, 'secret', {
-        expiresIn: 3600
+        expiresIn: '30d'
     }, (err, token) => {
         if(err) throw err;
         res.status(200).json({
