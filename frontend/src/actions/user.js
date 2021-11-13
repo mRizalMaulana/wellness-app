@@ -20,7 +20,7 @@ export const companyUserLogin = (email, password) => async (dispatch) => {
             }
         };
 
-        const {data} = await axios.post(`${baseUrl}/api/company-user/login`, {
+        const {data} = await axios.post(`${baseUrl}/api/company/user/login`, {
             email,
             password
         }, config);
@@ -39,5 +39,6 @@ export const companyUserLogin = (email, password) => async (dispatch) => {
 
 export const logout = () => async (dispatch) => {
     localStorage.removeItem('companyUser');
+    localStorage.removeItem('vendorUser');
     dispatch({ type: USER_LOGOUT });
 }
