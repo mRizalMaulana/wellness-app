@@ -1,18 +1,40 @@
 const asyncHandler = require('express-async-handler');
+const mongoose = require('mongoose');
 const CompanyUser = require('../models/companyUser');
+const Company =require('../models/company');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+
+const storeCompanyUser = asyncHandler(async (req, res) => {
+    const { name, email, password, company } = req.body;
+
+    const companyId  = new mongoose.Types.ObjectId(company);
+
+    const getCompany = await Company.findById(companyId);
+
+    if (!getCompany) {
+        res.status(400).json({ status:false, message: "Company doesn't exists" });
+    }
+
+    const companyUser = new CompanyUser({ name, email, password, company });
+    const salt = await bcrypt.genSalt(10);
+    companyUser.password = await bcrypt.hash(password, salt);
+    companyUser.save();
+    res.status(201).json({ status: true, message: 'Company User created' });
+});
 
 const login = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
 
-    const user = await CompanyUser.findOne({ email });
+    const user = await CompanyUser.findOne({ email }).populate('company');
 
     if (!user) {
         return res.status(400).json({ message: 'Invalid Credentials' });
     }
 
-    const isMatch = password === user.password;
-    if (!isMatch) {
+    const isPasswordMatch = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordMatch) {
         return res.status(400).json({ message: 'Invalid Credentials' });
     }
 
@@ -28,12 +50,14 @@ const login = asyncHandler(async (req, res) => {
         if(err) throw err;
         res.status(200).json({
             _id: user._id,
-            company_name: user.company_name,
+            name: user.name,
             email: user.email,   
-            token : token
+            token: token,
+            company_id: user.company._id,
+            company_name: user.company.name 
         });
     });
 
 });
 
-module.exports = { login }; 
+module.exports = { storeCompanyUser, login }; 

@@ -7,7 +7,6 @@ const vendorRoutes = require('./routes/vendorRoutes');
 const vendorUserRoutes = require('./routes/vendorUserRoutes');
 
 const companyRoutes = require('./routes/companyRoutes');
-
 const companyUserRoutes = require('./routes/companyUserRoutes'); 
 
 const app = express();
@@ -28,6 +27,7 @@ app.use('/api/vendor', vendorRoutes);
 app.use('/api/vendor/user', vendorUserRoutes);
 
 app.use('/api/company', companyRoutes);
+app.use('/api/company/user', companyUserRoutes);
 
 app.get('/api/booking', (req, res) => {
     res.json(sample);
@@ -38,7 +38,7 @@ app.get('/api/booking/:id', (req, res) => {
     res.json(data);
 });
 
-app.use('/api/company-user', companyUserRoutes);
+// app.use('/api/company-user', companyUserRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

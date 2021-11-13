@@ -1,20 +1,25 @@
 const mongoose = require('mongoose');
+const uniqueValidator = require('mongoose-unique-validator');
 
 const companyUserSchema = mongoose.Schema({
-    company_name: {
+    name: {
         type: String,
         required: true,
-        unique: true
     },
     email: {
         type: String,
         required: true,
-        unique: true
     },
     password: {
         type: String,
         required: true
+    },
+    company :{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'companies',
+        required: true
     }
 });
 
+companyUserSchema.plugin(uniqueValidator);
 module.exports = mongoose.model('company_user', companyUserSchema);
