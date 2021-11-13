@@ -45,11 +45,11 @@ export const eventListReducer = ( state = { event:[] }, action) => {
 export const bookingStoreReducer = ( state = {}, action) => {
     switch (action.type) {
         case BOOKING_STORE_REQUEST:
-            return { loading: true };
+            return { loadingBookingStore: true };
         case BOOKING_STORE_SUCCESS:
-            return { loading: false, booking: action.payload };
+            return { loadingBookingStore: false, booking: action.payload };
         case BOOKING_STORE_FAIL:
-            return {loading: false, error: action.payload }; 
+            return { loadingBookingStore: false, errorStoreBooking: action.payload }; 
         default:
             return state;
     }
