@@ -11,7 +11,7 @@ const companyUserRoutes = require('./routes/companyUserRoutes');
 
 const eventRoutes = require('./routes/eventRoutes');
 
-// const companyBookingRoutes = require('./routes/companyBookingRoutes');
+const companyBookingRoutes = require('./routes/companyBookingRoutes');
 
 const app = express();
 dotenv.config();
@@ -35,7 +35,7 @@ app.use('/api/company/user', companyUserRoutes);
 
 app.use('/api/event', eventRoutes);
 
-// app.use('api/company/booking', companyBookingRoutes);
+app.use('/api/company/booking', companyBookingRoutes);
 
 app.get('/api/booking', (req, res) => {
     res.json(sample);
