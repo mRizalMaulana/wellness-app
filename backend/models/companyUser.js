@@ -19,7 +19,7 @@ const companyUserSchema = mongoose.Schema({
         ref: 'companies',
         required: true
     }
-});
+}, { timestamps: true });
 
 companyUserSchema.plugin(uniqueValidator);
 module.exports = mongoose.model('company_user', companyUserSchema);
