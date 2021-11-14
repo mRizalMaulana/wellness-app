@@ -1,8 +1,9 @@
 const asyncHandler = require('express-async-handler');
 const Booking = require('../models/booking');
 
-const getBooking = asyncHandler(async (req, res) => {
-    const bookings =  await Booking.find().populate('event').populate('vendor').populate('company');
+const getBookingByCompany = asyncHandler(async (req, res) => {
+    const company = req.params.id;
+    const bookings =  await Booking.find({ company }).populate('event').populate('vendor').populate('company');
 
     res.json(bookings);
 });
@@ -15,4 +16,4 @@ const storeBooking = asyncHandler(async (req, res) => {
     res.status(201).json({ status: true, message: 'Booking created' });        
 });
 
-module.exports = { getBooking, storeBooking }; 
+module.exports = { getBookingByCompany, storeBooking }; 

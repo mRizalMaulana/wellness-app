@@ -13,7 +13,10 @@ import {
 import { 
     BOOKING_STORE_REQUEST, 
     BOOKING_STORE_SUCCESS,
-    BOOKING_STORE_FAIL
+    BOOKING_STORE_FAIL,
+    COMPANY_BOOKING_LIST_REQUEST,
+    COMPANY_BOOKING_LIST_SUCCESS,
+    COMPANY_BOOKING_LIST_FAIL
 } from '../constants/booking';
 
 export const vendorListReducer = ( state = { vendor:[] }, action) => {
@@ -50,6 +53,19 @@ export const bookingStoreReducer = ( state = {}, action) => {
             return { loadingBookingStore: false, booking: action.payload };
         case BOOKING_STORE_FAIL:
             return { loadingBookingStore: false, errorStoreBooking: action.payload }; 
+        default:
+            return state;
+    }
+}
+
+export const bookingCompanyListReducer = ( state = { companyBooking:[] }, action) => {
+    switch (action.type) {
+        case COMPANY_BOOKING_LIST_REQUEST:
+            return { loadingCompanyBookingList: true };
+        case COMPANY_BOOKING_LIST_SUCCESS:
+            return { loadingCompanyBookingList: false, companyBooking: action.payload };
+        case COMPANY_BOOKING_LIST_FAIL:
+            return { loadingCompanyBookingList: false, errorCompanyBooking: action.payload }; 
         default:
             return state;
     }
