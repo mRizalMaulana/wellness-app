@@ -22,8 +22,8 @@ function App() {
           <Switch>
             <Route exact path='/' component={LandingPage}/>
             <Route exact path='/login' component={Login}/>
-            <PrivateRoute exact path='/company/booking' component={CompanyBooking}/>
-            <PrivateRoute exact path='/company/booking/:id' component={CompanyBookingDetail}/>
+            <CompanyUserPrivateRoute exact path='/company/booking' component={CompanyBooking}/>
+            <CompanyUserPrivateRoute exact path='/company/booking/:id' component={CompanyBookingDetail}/>
             <CompanyUserPrivateRoute exact path='/company/create/booking' component={CompanyBookingCreate}/>
             <PrivateRoute exact path='/vendor/booking' component={VendorBooking}/>
             {/* <Route path="/booking/:id" component={BookingDetail} /> */}

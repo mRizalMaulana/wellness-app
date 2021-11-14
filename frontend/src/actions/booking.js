@@ -4,7 +4,10 @@ import {
     BOOKING_STORE_FAIL,
     COMPANY_BOOKING_LIST_REQUEST,
     COMPANY_BOOKING_LIST_SUCCESS,
-    COMPANY_BOOKING_LIST_FAIL
+    COMPANY_BOOKING_LIST_FAIL,
+    BOOKING_DETAIL_REQUEST,
+    BOOKING_DETAIL_SUCCESS,
+    BOOKING_DETAIL_FAIL
 } from "../constants/booking"
 import axios from 'axios';
 import dotenv from 'dotenv';
@@ -61,6 +64,30 @@ export const CompanyBookingList = () => async (dispatch, getState) => {
     } catch (err) {
         dispatch({
             type: COMPANY_BOOKING_LIST_FAIL,
+            payload: 
+                err.response && err.response.data.message 
+                    ? err.response.data.message : err.message
+        });
+    }
+}
+
+export const BookingDetail = (id) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: BOOKING_DETAIL_REQUEST });
+
+        const { userLogin: { companyUser } } = getState();
+        const baseUrl = process.env.REACT_APP_BACKEND_HOST;
+        const config = { headers: { 
+            "Authorization" : `Bearer ${companyUser.token}`,
+            "Content-type"  : "application/json" 
+        } };
+        
+        const { data } = await axios.get(`${baseUrl}/api/company/booking/detail/${id}`, config);
+ 
+        dispatch({ type: BOOKING_DETAIL_SUCCESS, payload:data });
+    } catch (err) {
+        dispatch({
+            type: BOOKING_DETAIL_FAIL,
             payload: 
                 err.response && err.response.data.message 
                     ? err.response.data.message : err.message

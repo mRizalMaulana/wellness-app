@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -12,12 +12,11 @@ const List = () => {
     const dispatch = useDispatch();
 
     const companyBookingList = useSelector((state) => state.companyBookingList);
-    const { loadingCompanyBookingList, companyBooking, errorCompanyBooking } = companyBookingList;
+    const { companyBooking } = companyBookingList;
     
     useEffect(() => {
         dispatch(CompanyBookingList())
     }, [dispatch]);  
-    console.log(companyBooking);
 
     return (
         <MainLayout title="Booking">
@@ -95,7 +94,7 @@ const List = () => {
                                             <FormatDate date={data.createdAt}/>
                                         </td>
                                         <td className="px-6 py-4 ">
-                                            <Link to={`/api/company/booking/${data._id}`} className="px-4  py-1 text-sm text-blue-600 bg-blue-200 rounded-full">See Detail</Link>
+                                            <Link to={`/company/booking/${data._id}`} className="px-4  py-1 text-sm text-blue-600 bg-blue-200 rounded-full">See Detail</Link>
                                         </td> 
                                     </tr>
                                 ))

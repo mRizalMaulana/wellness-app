@@ -16,7 +16,10 @@ import {
     BOOKING_STORE_FAIL,
     COMPANY_BOOKING_LIST_REQUEST,
     COMPANY_BOOKING_LIST_SUCCESS,
-    COMPANY_BOOKING_LIST_FAIL
+    COMPANY_BOOKING_LIST_FAIL,
+    BOOKING_DETAIL_REQUEST,
+    BOOKING_DETAIL_SUCCESS,
+    BOOKING_DETAIL_FAIL
 } from '../constants/booking';
 
 export const vendorListReducer = ( state = { vendor:[] }, action) => {
@@ -66,6 +69,19 @@ export const bookingCompanyListReducer = ( state = { companyBooking:[] }, action
             return { loadingCompanyBookingList: false, companyBooking: action.payload };
         case COMPANY_BOOKING_LIST_FAIL:
             return { loadingCompanyBookingList: false, errorCompanyBooking: action.payload }; 
+        default:
+            return state;
+    }
+}
+
+export const bookingDetailReducer = ( state = {}, action) => {
+    switch (action.type) {
+        case BOOKING_DETAIL_REQUEST:
+            return { loadingBookingDetail: true };
+        case BOOKING_DETAIL_SUCCESS:
+            return { loadingBookingDetail: false, booking: action.payload };
+        case BOOKING_DETAIL_FAIL:
+            return { loadingBookingDetail: false, errorBookingDetail: action.payload }; 
         default:
             return state;
     }

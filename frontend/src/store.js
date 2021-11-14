@@ -2,14 +2,21 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { userLoginReducer } from './reducers/user';
-import { vendorListReducer, eventListReducer, bookingStoreReducer, bookingCompanyListReducer } from './reducers/booking';
+import { 
+    vendorListReducer, 
+    eventListReducer, 
+    bookingStoreReducer, 
+    bookingCompanyListReducer,
+    bookingDetailReducer
+} from './reducers/booking';
 
 const reducer = combineReducers({
     userLogin: userLoginReducer,
     vendorList: vendorListReducer,
     eventList: eventListReducer,
     storeBooking: bookingStoreReducer,
-    companyBookingList: bookingCompanyListReducer
+    companyBookingList: bookingCompanyListReducer,
+    bookingDetail: bookingDetailReducer
 });
 
 const companyUserFromStorage = localStorage.getItem('companyUser') ? JSON.parse(localStorage.getItem('companyUser')) : null;
