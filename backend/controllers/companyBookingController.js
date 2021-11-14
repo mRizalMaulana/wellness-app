@@ -8,6 +8,13 @@ const getBookingByCompany = asyncHandler(async (req, res) => {
     res.json(bookings);
 });
 
+const getBookingDetail = asyncHandler(async (req, res) => {
+    const id = req.params.id;
+    const booking =  await Booking.findById(id).populate('event').populate('vendor').populate('company');
+
+    res.json(booking);
+});
+
 const storeBooking = asyncHandler(async (req, res) => {
     const { event, vendor, company, location, proposed_date_1, proposed_date_2, proposed_date_3 } = req.body;
     
@@ -16,4 +23,4 @@ const storeBooking = asyncHandler(async (req, res) => {
     res.status(201).json({ status: true, message: 'Booking created' });        
 });
 
-module.exports = { getBookingByCompany, storeBooking }; 
+module.exports = { getBookingByCompany, getBookingDetail, storeBooking }; 
