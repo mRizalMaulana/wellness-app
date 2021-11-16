@@ -11,14 +11,14 @@ const Navbar = () => {
     const dispatch = useDispatch();
 
     const userLogin = useSelector(state => state.userLogin);
-    const { companyUser, vendorUser } = userLogin;
+    const { loggedInUser } = userLogin;
 
     const logoutHandler = () => {
         dispatch(logout());
         history.push('/');  
     }
 
-    useEffect(() => {}, [companyUser, vendorUser]);
+    useEffect(() => {}, [loggedInUser]);
             
     return (
         <Fragment>
@@ -39,28 +39,28 @@ const Navbar = () => {
                     <div className={"lg:flex flex-grow items-center" + (navbarOpen ? " block" : " hidden")}>
                         <ul className='flex flex-col lg:flex-row list-none lg:ml-auto'>
                             {
-                                companyUser && 
+                                loggedInUser && (loggedInUser.type === 'company') && 
                                 <li className='text-center my-2 lg:my-0 border-2 border-black lg:border-none py-2 lg:p-0'>
                                     <Link className='px-3 hover:text-white' to='/company/booking' >Booking</Link>
                                 </li>
                             }
                             
                             {
-                                vendorUser &&
+                                loggedInUser && (loggedInUser.type === 'vendor') &&
                                 <li className='text-center my-2 lg:my-0 border-2 border-black lg:border-none py-2 lg:p-0'>
                                     <Link className='px-3 hover:text-white' to='/vendor/booking' >Booking</Link>
                                 </li>
                             }
                             
                             {
-                                !companyUser &&
+                                !loggedInUser &&
                                 <li className='text-center my-2 lg:my-0 border-2 border-black lg:border-none py-2 lg:p-0'>
                                     <Link className='px-3 hover:text-white' to='/login' >Login</Link>
                                 </li>
                             }
                             
                             {
-                                companyUser && 
+                                loggedInUser && 
                                 <li className='text-center my-2 lg:my-0 border-2 border-black lg:border-none py-2 lg:p-0'>
                                     <button className='px-3 hover:text-white' onClick={logoutHandler}>Logout</button>
                                 </li>

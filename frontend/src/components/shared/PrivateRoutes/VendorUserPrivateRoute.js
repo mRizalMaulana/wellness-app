@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-const CompanyUserPrivateRoute = ({ component: Component, ...rest }, getState) => {
+const VendorUserPrivateRoute = ({ component: Component, ...rest }, getState) => {
     const userLogin = useSelector((state) => state.userLogin);
     const { loggedInUser } = userLogin;
     let type = '';
@@ -13,7 +13,7 @@ const CompanyUserPrivateRoute = ({ component: Component, ...rest }, getState) =>
     useEffect(() => {}, [loggedInUser]);
 
     return (
-        <Route { ...rest} render={ props => (type !== 'company') ? (
+        <Route { ...rest} render={ props => (type !== 'vendor') ? (
             <Redirect to='/'/>
         ) : (
             <Component {...props}/>
@@ -21,4 +21,4 @@ const CompanyUserPrivateRoute = ({ component: Component, ...rest }, getState) =>
     );
 }
 
-export default CompanyUserPrivateRoute;
+export default VendorUserPrivateRoute;

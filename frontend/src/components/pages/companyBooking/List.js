@@ -3,21 +3,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { CompanyBookingList } from "../../../actions/booking";
+import { PopUpModal } from "../../../actions/popUpModal";
 
 import MainLayout from "../../shared/MainLayout";
 import FormatDate from "../../shared/FormatDate";
 import BookingStatus from "../../shared/BookingStatus";
+import ModalDetail from "./ModalDetail";
 
 const List = () => {
     const dispatch = useDispatch();
 
     const companyBookingList = useSelector((state) => state.companyBookingList);
     const { companyBooking } = companyBookingList;
+
+    const showModalState = useSelector((state) => state.showModal);
+    const { showModal } = showModalState;
     
     useEffect(() => {
         dispatch(CompanyBookingList())
-    }, [dispatch]);  
-
+    }, [dispatch]);
+    
     return (
         <MainLayout title="Booking">
             <div className="mt-5 p-5 bg-white rounded shadow-lg">
@@ -51,7 +56,7 @@ const List = () => {
                                     Created at
                                 </th>
                                 <th className="px-6 py-2 text-xs text-gray-500">
-                                    Detail
+                                    View
                                 </th>
                             </tr>
                         </thead>
@@ -94,7 +99,8 @@ const List = () => {
                                             <FormatDate date={data.createdAt}/>
                                         </td>
                                         <td className="px-6 py-4 ">
-                                            <Link to={`/company/booking/${data._id}`} className="px-4  py-1 text-sm text-blue-600 bg-blue-200 rounded-full">See Detail</Link>
+                                            <button onClick={ () => { dispatch(PopUpModal(true, data._id))} } className='px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full'> View </button>
+                                            {/* <Link to={`/company/booking/${data._id}`} className="px-4  py-1 text-sm text-blue-600 bg-blue-200 rounded-full">View</Link> */}
                                         </td> 
                                     </tr>
                                 ))
@@ -103,6 +109,11 @@ const List = () => {
                     </table>
                 </div>              
             </div>
+
+            {
+                showModal && 
+                <ModalDetail />
+            }
         </MainLayout>
     );
 }

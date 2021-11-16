@@ -18,10 +18,10 @@ export const StoreBooking = (event, vendor, company, location, proposed_date_1, 
     try {
         dispatch({ type: BOOKING_STORE_REQUEST });
 
-        const { userLogin: { companyUser } } = getState();
+        const { userLogin: { loggedInUser } } = getState();
         const baseUrl = process.env.REACT_APP_BACKEND_HOST;
         const config = { headers: { 
-            "Authorization" : `Bearer ${companyUser.token}`,
+            "Authorization" : `Bearer ${loggedInUser.token}`,
             "Content-type"  : "application/json" 
         } };
         
@@ -50,13 +50,13 @@ export const CompanyBookingList = () => async (dispatch, getState) => {
     try {
         dispatch({ type: COMPANY_BOOKING_LIST_REQUEST });
 
-        const { userLogin: { companyUser } } = getState();
+        const { userLogin: { loggedInUser } } = getState();
         const baseUrl = process.env.REACT_APP_BACKEND_HOST;
         const config = { headers: { 
-            "Authorization" : `Bearer ${companyUser.token}`,
+            "Authorization" : `Bearer ${loggedInUser.token}`,
             "Content-type"  : "application/json" 
         } };
-        const company = companyUser.company_id;
+        const company = loggedInUser.company_id;
         
         const { data } = await axios.get(`${baseUrl}/api/company/booking/list/${company}`, config);
  
@@ -75,10 +75,10 @@ export const BookingDetail = (id) => async (dispatch, getState) => {
     try {
         dispatch({ type: BOOKING_DETAIL_REQUEST });
 
-        const { userLogin: { companyUser } } = getState();
+        const { userLogin: { loggedInUser } } = getState();
         const baseUrl = process.env.REACT_APP_BACKEND_HOST;
         const config = { headers: { 
-            "Authorization" : `Bearer ${companyUser.token}`,
+            "Authorization" : `Bearer ${loggedInUser.token}`,
             "Content-type"  : "application/json" 
         } };
         

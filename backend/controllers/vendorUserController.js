@@ -59,7 +59,8 @@ const login = asyncHandler(async (req, res) => {
             email: user.email,   
             token: token,
             vendor_id: user.vendor._id,
-            vendor_name: user.vendor.name 
+            vendor_name: user.vendor.name,
+            type: 'vendor' 
         });
     });
 

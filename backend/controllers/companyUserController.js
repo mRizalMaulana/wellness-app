@@ -54,7 +54,8 @@ const login = asyncHandler(async (req, res) => {
             email: user.email,   
             token: token,
             company_id: user.company._id,
-            company_name: user.company.name 
+            company_name: user.company.name,
+            type: 'company' 
         });
     });
 

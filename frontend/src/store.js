@@ -1,7 +1,7 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { userLoginReducer } from './reducers/user';
+import { userLoginReducer, vendorUserLoginReducer } from './reducers/user';
 import { 
     vendorListReducer, 
     eventListReducer, 
@@ -9,6 +9,7 @@ import {
     bookingCompanyListReducer,
     bookingDetailReducer
 } from './reducers/booking';
+import { popUpModalReducer } from './reducers/popUpModal';
 
 const reducer = combineReducers({
     userLogin: userLoginReducer,
@@ -16,7 +17,8 @@ const reducer = combineReducers({
     eventList: eventListReducer,
     storeBooking: bookingStoreReducer,
     companyBookingList: bookingCompanyListReducer,
-    bookingDetail: bookingDetailReducer
+    bookingDetail: bookingDetailReducer,
+    showModal: popUpModalReducer
 });
 
 const companyUserFromStorage = localStorage.getItem('companyUser') ? JSON.parse(localStorage.getItem('companyUser')) : null;
@@ -24,9 +26,8 @@ const vendorUserFromStorage = localStorage.getItem('vendorUser') ? JSON.parse(lo
 
 const initialState = {
     userLogin: {
-        companyUser : companyUserFromStorage,
-        vendorUser: vendorUserFromStorage
-    },
+        loggedInUser : companyUserFromStorage || vendorUserFromStorage
+    }
 };
 
 const middleware = [thunk];

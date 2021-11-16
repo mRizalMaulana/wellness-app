@@ -1,29 +1,29 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { companyUserLogin } from '../../actions/user';
+import { vendorUserLogin } from '../../actions/user';
 
 import Message from '../shared/MessageLayouts/DefaultMessage';
 
 
-const Login = ({history}) => {
+const VendorLogin = ({history}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState(''); 
 
     const dispatch = useDispatch();
 
     const userLogin = useSelector((state) => state.userLogin);
-    const { loading, error, loggedInUser} = userLogin;
+    const { loading, error, loggedInUser } = userLogin;
 
     useEffect(()=> {
         if (loggedInUser) {
-            history.push('/company/booking');
+            history.push('/vendor/booking');
         }
     },[history, loggedInUser]);
 
     const onSubmit = async (e) => {
         e.preventDefault();
 
-        dispatch(companyUserLogin(email, password))
+        dispatch(vendorUserLogin(email, password))
 
     }
 
@@ -76,4 +76,4 @@ const Login = ({history}) => {
     );
 }
 
-export default Login;
+export default VendorLogin;
