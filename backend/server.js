@@ -12,6 +12,7 @@ const companyUserRoutes = require('./routes/companyUserRoutes');
 const eventRoutes = require('./routes/eventRoutes');
 
 const companyBookingRoutes = require('./routes/companyBookingRoutes');
+const vendorBookingRoutes = require('./routes/vendorBookingRoutes');
 
 const app = express();
 dotenv.config();
@@ -36,15 +37,7 @@ app.use('/api/company/user', companyUserRoutes);
 app.use('/api/event', eventRoutes);
 
 app.use('/api/company/booking', companyBookingRoutes);
-
-app.get('/api/booking', (req, res) => {
-    res.json(sample);
-});
-
-app.get('/api/booking/:id', (req, res) => {
-    const data = sample.find((data)=> data._id === req.params.id)
-    res.json(data);
-});
+app.use('/api/vendor/booking', vendorBookingRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

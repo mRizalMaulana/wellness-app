@@ -1,27 +1,40 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 
-import { CompanyBookingList } from "../../../actions/booking";
+import { VendorBookingList } from "../../../actions/booking";
 import { PopUpModal } from "../../../actions/popUpModal";
 
 import MainLayout from "../../shared/MainLayout";
 import FormatDate from "../../shared/FormatDate";
 import BookingStatus from "../../shared/BookingStatus";
-// import ModalDetail from "./ModalDetail";
+import ModalDetail from "./ModalDetail";
+import ModalRejectBooking from "./ModalRejectBooking";
+import ModalApproveBooking from "./ModalApproveBooking";
 
 const List = () => {
     const dispatch = useDispatch();
 
-    const companyBookingList = useSelector((state) => state.companyBookingList);
-    const { companyBooking } = companyBookingList;
+    const vendorBookingList = useSelector((state) => state.vendorBookingList);
+    const { vendorBooking } = vendorBookingList;
 
     const showModalState = useSelector((state) => state.showModal);
     const { showModal } = showModalState;
-    
+
+    const showModalRejectState = useSelector((state) => state.showModalReject);
+    const { showModalReject } = showModalRejectState;
+
+    const showModalApproveState = useSelector((state) => state.showModalApprove);
+    const { showModalApprove } = showModalApproveState;
+
+    const updateBooking = useSelector((state) => state.updateBooking);
+    const { bookingUpdate } = updateBooking;
+
     useEffect(() => {
-        dispatch(CompanyBookingList())
-    }, [dispatch]);
+        dispatch(VendorBookingList());
+        if (bookingUpdate) {
+            dispatch(VendorBookingList());
+        }        
+    }, [dispatch, bookingUpdate]);
     
     return (
         <MainLayout title="Booking">
@@ -58,8 +71,8 @@ const List = () => {
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-300 text-center">
                             {
-                                companyBooking &&
-                                companyBooking.reverse().map((data) => 
+                                vendorBooking &&
+                                vendorBooking.map((data) => 
                                     (
                                     <tr key={data._id} className="whitespace-nowrap">
                                         <td className="px-6 py-4 text-sm text-gray-500">
@@ -71,11 +84,11 @@ const List = () => {
                                             </div>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <div className="text-sm text-gray-500">{data.vendor.name}</div>
+                                            <div className="text-sm text-gray-500">{data.company.name}</div>
                                         </td>
                                         <td className="px-6 py-4 text-sm  text-gray-500">
                                             {
-                                                !data.is_reject && 
+                                                !data.confirmed_date && 
                                                     <div>
                                                         <div><FormatDate date={data.proposed_date_1}/></div>
                                                         <div><FormatDate date={data.proposed_date_2}/></div>
@@ -96,20 +109,30 @@ const List = () => {
                                         </td>
                                         <td className="px-6 py-4 ">
                                             <button onClick={ () => { dispatch(PopUpModal(true, data._id))} } className='px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full'> View </button>
-                                            {/* <Link to={`/company/booking/${data._id}`} className="px-4  py-1 text-sm text-blue-600 bg-blue-200 rounded-full">View</Link> */}
                                         </td> 
                                     </tr>
-                                ))
+                                )).reverse()
                             }
                         </tbody>
                     </table>
-                </div>              
+                </div>
             </div>
 
-            {/* {
+            {
                 showModal && 
                 <ModalDetail />
-            } */}
+            }
+
+            {
+                showModalReject && 
+                <ModalRejectBooking />
+            }
+
+            {
+                showModalApprove && 
+                <ModalApproveBooking />
+            }
+            
         </MainLayout>
     );
 }

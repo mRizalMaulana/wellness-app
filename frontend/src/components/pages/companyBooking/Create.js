@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import { VendorList } from '../../../actions/vendor';
 import { EventList } from "../../../actions/event";
-import { StoreBooking } from "../../../actions/booking"; 
+import { StoreBooking, CompanyBookingList } from "../../../actions/booking"; 
 
 import MainLayout from "../../shared/MainLayout";
 import Message from '../../shared/MessageLayouts/DefaultMessage';
@@ -26,7 +26,7 @@ const Create = ({history}) => {
     const { loadingEvent, event, errorEvent } = eventList;
 
     const storeBooking = useSelector((state) => state.storeBooking);
-    const { loadingBookingStore, booking ,errorStoreBooking } = storeBooking;
+    const { loadingBookingStore, errorStoreBooking } = storeBooking;
 
     let vendorOptions = [];
     if (!loading && !error) {
@@ -40,13 +40,6 @@ const Create = ({history}) => {
         eventOptions = event.map((e)=>{
             return { value: e._id, label: e.name }
            });
-    }
-
-    const userLogin = useSelector(state => state.userLogin);   
-    const { companyUser } = userLogin;
-    let company_id = '';
-    if (companyUser) {
-        company_id = companyUser.company_id
     }
 
     useEffect(() => {
@@ -70,7 +63,6 @@ const Create = ({history}) => {
         dispatch(StoreBooking(
             paramEvent, 
             paramVendor, 
-            company_id, 
             paramLocation,
             paramDate1,
             paramDate2,

@@ -12,10 +12,10 @@ export const EventList = () => async (dispatch, getState) => {
     try {
         dispatch({ type: EVENT_LIST_REQUEST });
 
-        const { userLogin: { companyUser } } = getState();
+        const { userLogin: { loggedInUser } } = getState();
         const baseUrl = process.env.REACT_APP_BACKEND_HOST;
         const config = { headers: { 
-            "Authorization" : `Bearer ${companyUser.token}`,
+            "Authorization" : `Bearer ${loggedInUser.token}`,
             "Content-type"  : "application/json" 
         } };
         

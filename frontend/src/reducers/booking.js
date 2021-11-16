@@ -19,7 +19,13 @@ import {
     COMPANY_BOOKING_LIST_FAIL,
     BOOKING_DETAIL_REQUEST,
     BOOKING_DETAIL_SUCCESS,
-    BOOKING_DETAIL_FAIL
+    BOOKING_DETAIL_FAIL,
+    VENDOR_BOOKING_LIST_REQUEST,
+    VENDOR_BOOKING_LIST_SUCCESS,
+    VENDOR_BOOKING_LIST_FAIL,
+    BOOKING_UPDATE_REQUEST,
+    BOOKING_UPDATE_SUCCESS,
+    BOOKING_UPDATE_FAIL
 } from '../constants/booking';
 
 export const vendorListReducer = ( state = { vendor:[] }, action) => {
@@ -82,6 +88,32 @@ export const bookingDetailReducer = ( state = {}, action) => {
             return { loadingBookingDetail: false, booking: action.payload };
         case BOOKING_DETAIL_FAIL:
             return { loadingBookingDetail: false, errorBookingDetail: action.payload }; 
+        default:
+            return state;
+    }
+}
+
+export const bookingVendorListReducer = ( state = { vendorBooking:[] }, action) => {
+    switch (action.type) {
+        case VENDOR_BOOKING_LIST_REQUEST:
+            return { loadingVendorBookingList: true };
+        case VENDOR_BOOKING_LIST_SUCCESS:
+            return { loadingVendorBookingList: false, vendorBooking: action.payload };
+        case VENDOR_BOOKING_LIST_FAIL:
+            return { loadingVendorBookingList: false, errorVendorBookingList: action.payload }; 
+        default:
+            return state;
+    }
+}
+
+export const bookingUpdateReducer = ( state = {}, action) => {
+    switch (action.type) {
+        case BOOKING_UPDATE_REQUEST:
+            return { loadingBookingUpdate: true };
+        case BOOKING_UPDATE_SUCCESS:
+            return { loadingBookingUpdate: false, bookingUpdate: action.payload };
+        case BOOKING_UPDATE_FAIL:
+            return { loadingBookingUpdate: false, errorBookingUpdate: action.payload }; 
         default:
             return state;
     }

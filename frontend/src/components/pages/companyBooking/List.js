@@ -18,10 +18,16 @@ const List = () => {
 
     const showModalState = useSelector((state) => state.showModal);
     const { showModal } = showModalState;
-    
+
+    const storeBooking = useSelector((state) => state.storeBooking);
+    const { booking } = storeBooking;
+
     useEffect(() => {
-        dispatch(CompanyBookingList())
-    }, [dispatch]);
+        dispatch(CompanyBookingList());
+        if (booking) {
+            dispatch(CompanyBookingList());
+        }
+    }, [dispatch, booking]);
     
     return (
         <MainLayout title="Booking">
@@ -79,7 +85,7 @@ const List = () => {
                                         </td>
                                         <td className="px-6 py-4 text-sm  text-gray-500">
                                             {
-                                                !data.is_reject && 
+                                                !data.confirmed_date && 
                                                     <div>
                                                         <div><FormatDate date={data.proposed_date_1}/></div>
                                                         <div><FormatDate date={data.proposed_date_2}/></div>
@@ -100,7 +106,6 @@ const List = () => {
                                         </td>
                                         <td className="px-6 py-4 ">
                                             <button onClick={ () => { dispatch(PopUpModal(true, data._id))} } className='px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full'> View </button>
-                                            {/* <Link to={`/company/booking/${data._id}`} className="px-4  py-1 text-sm text-blue-600 bg-blue-200 rounded-full">View</Link> */}
                                         </td> 
                                     </tr>
                                 ))

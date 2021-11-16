@@ -1,15 +1,17 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { userLoginReducer, vendorUserLoginReducer } from './reducers/user';
+import { userLoginReducer } from './reducers/user';
 import { 
     vendorListReducer, 
     eventListReducer, 
     bookingStoreReducer, 
     bookingCompanyListReducer,
-    bookingDetailReducer
+    bookingDetailReducer,
+    bookingVendorListReducer,
+    bookingUpdateReducer
 } from './reducers/booking';
-import { popUpModalReducer } from './reducers/popUpModal';
+import { popUpModalReducer, popUpModalRejectReducer, popUpModalApproveReducer } from './reducers/popUpModal';
 
 const reducer = combineReducers({
     userLogin: userLoginReducer,
@@ -18,7 +20,11 @@ const reducer = combineReducers({
     storeBooking: bookingStoreReducer,
     companyBookingList: bookingCompanyListReducer,
     bookingDetail: bookingDetailReducer,
-    showModal: popUpModalReducer
+    showModal: popUpModalReducer,
+    vendorBookingList: bookingVendorListReducer,
+    showModalReject: popUpModalRejectReducer,
+    updateBooking: bookingUpdateReducer,
+    showModalApprove: popUpModalApproveReducer
 });
 
 const companyUserFromStorage = localStorage.getItem('companyUser') ? JSON.parse(localStorage.getItem('companyUser')) : null;

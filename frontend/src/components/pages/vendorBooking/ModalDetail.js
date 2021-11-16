@@ -1,13 +1,14 @@
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { PopUpModal } from "../../../actions/popUpModal";
+import { PopUpModal, PopUpModalReject, PopUpModalApprove } from "../../../actions/popUpModal";
 import { BookingDetail } from "../../../actions/booking";
+
 
 import FormatDate from "../../shared/FormatDate";
 import BookingStatus from "../../shared/BookingStatus";
 
-const ModalDetail = () => {
+const ModalDetail = () => {   
     const dispatch = useDispatch();
 
     const showModalState = useSelector((state) => state.showModal);
@@ -15,6 +16,9 @@ const ModalDetail = () => {
 
     const bookingDetail = useSelector((state) => state.bookingDetail);
     const { loadingBookingDetail, booking, errorBookingDetail } = bookingDetail;
+
+    const showModalRejectState = useSelector((state) => state.showModalReject);
+    const { showModalReject, rejectBookingId } = showModalRejectState;
 
     useEffect(() => {
         if (showModal) {
@@ -29,20 +33,24 @@ const ModalDetail = () => {
                     <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                         {/*header*/}
                         <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
-                                { booking && 
-                                    <h4 className="text-xl font-semibold">
-                                        Booking ID :
-                                        <span className='block'>
-                                            {booking._id}
-                                        </span>
-                                    </h4>
-                                }
-                            <button className="p-1 ml-auto bg-transparent border-0  float-right text-3xl leading-none font-semibold outline-none focus:outline-none">
-                                <span className="bg-transparent text-gray-400  h-6 text-2xl block outline-none focus:outline-none flex flex-wrap content-center"
-                                onClick={ () => { dispatch(PopUpModal(false))} }>
-                                ×
-                                </span>
-                            </button>
+                            {   booking && 
+                                <h4 className="text-xl font-semibold">
+                                    Booking ID :
+                                    <span className='block'>
+                                        {booking._id}
+                                    </span>
+                                </h4>
+                            }
+
+                            {
+                                !loadingBookingDetail &&
+                                <button className="p-1 ml-auto bg-transparent border-0  float-right text-2xl leading-none font-semibold outline-none focus:outline-none">
+                                    <span className="bg-transparent text-gray-400 hover:text-black h-6 block outline-none focus:outline-none flex flex-wrap content-center"
+                                    onClick={ () => { dispatch(PopUpModal(false))} }> x
+                                    </span>
+                                </button>
+                            }
+                            
                         </div>
                         {/*body*/}
                         <div className="relative p-6 flex-auto">
@@ -75,9 +83,9 @@ const ModalDetail = () => {
 
                                         <div className='mt-2'>
                                             <label className='block'>
-                                                <span className='text-gray-700'>Vendor</span>
+                                                <span className='text-gray-700'>Company</span>
                                                 <div className='mt-1 py-2 pl-4 border border-gray-300 rounded-md'>
-                                                    {booking.vendor.name}
+                                                    {booking.company.name}
                                                 </div>
                                             </label>
                                         </div>
@@ -100,25 +108,13 @@ const ModalDetail = () => {
                                             </label>
                                         </div>
 
-                                        {
-                                            !!booking.reject_reason && 
-                                                <div className='mt-2'>
-                                                    <label className="block">
-                                                        <span className="text-gray-700">Reject Reason</span>
-                                                        <div className='mt-1 py-2 pl-4 border border-gray-300 rounded-md'>
-                                                            {booking.reject_reason}
-                                                        </div>
-                                                    </label>
-                                                </div>
-                                        }
-
                                     </div>
                                 </div>
 
                                 <div className='flex flex-wrap justify-center content-center'>
                                     <div className='w-11/12'>
                                         {
-                                            !booking.confirmed_date && 
+                                            !booking.is_reject && 
                                                 <Fragment>
                                                     <div className='mt-2'>
                                                         <label className="block">
@@ -148,12 +144,24 @@ const ModalDetail = () => {
                                         }
 
                                         {
+                                            !!booking.reject_reason && 
+                                                <div className='mt-2'>
+                                                    <label className="block">
+                                                        <span className="text-gray-700">Proposed Date 3</span>
+                                                        <div className='mt-1 py-2 pl-4 border border-gray-300 rounded-md'>
+                                                            {booking.reject_reason}
+                                                        </div>
+                                                    </label>
+                                                </div>
+                                        }
+
+                                        {
                                             !!booking.confirmed_date && 
                                                 <div className='mt-2'>
                                                     <label className="block">
-                                                        <span className="text-gray-700">Confirmed at</span>
+                                                        <span className="text-gray-700">Proposed Date 3</span>
                                                         <div className='mt-1 py-2 pl-4 border border-gray-300 rounded-md'>
-                                                            <FormatDate date={booking.confirmed_date} />
+                                                            <FormatDate date={booking.confirmed_date} /> 
                                                         </div>
                                                     </label>
                                                 </div>
@@ -172,19 +180,39 @@ const ModalDetail = () => {
                                 </div>
                             </div>
                         }
+
                   </div>
                   {/*footer*/}
-                  {
-                      !loadingBookingDetail && 
-                        <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-                            <button onClick={ () => { dispatch(PopUpModal(false))} }
-                                className="bg-blue-400 rounded-md text-white font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                type="button"
-                            >
-                                Close
-                            </button>
-                        </div>
-                  }
+                    <div className="flex items-center p-6 border-t border-solid border-blueGray-200 rounded-b">
+                        {
+                            booking && (!booking.is_reject && !booking.confirmed_date) ?
+                                <div className='flex w-full'>
+                                    <button className='bg-red-400 mr-auto 
+                                        rounded-md text-white font-bold 
+                                        uppercase px-6 py-2 text-sm hover:bg-red-600'
+                                        onClick={ () => { dispatch(PopUpModal(false)); dispatch(PopUpModalReject(true, booking._id)); } }> 
+                                        Reject 
+                                    </button> 
+                                    
+                                    <button className='bg-green-400 ml-auto 
+                                        rounded-md text-white font-bold 
+                                        uppercase px-6 py-2 text-sm hover:bg-green-600'
+                                        onClick={ () => { dispatch(PopUpModal(false)); dispatch(PopUpModalApprove(true, booking._id, booking.proposed_date_1, booking.proposed_date_2, booking.proposed_date_3)) } }>
+                                        Approve 
+                                    </button>
+                                </div>
+                            : 
+
+                            !loadingBookingDetail && 
+                                <div className='flex w-full'>
+                                    <button onClick={ () => { dispatch(PopUpModal(false))} } className='bg-blue-400 ml-auto 
+                                        rounded-md text-white font-bold 
+                                        uppercase px-6 py-2 text-sm hover:bg-blue-600'>
+                                        Close
+                                    </button>
+                                </div>
+                        }
+                    </div>
                   
                 </div>
               </div>
