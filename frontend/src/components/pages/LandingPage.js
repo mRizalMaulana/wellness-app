@@ -38,15 +38,15 @@ const LandingPage = () => {
                     <p>Login as Admin Vendor User, go to <br/><Link to='/vendor/login' className='bg-blue-500 py-1 px-4 text-white rounded hover:bg-blue-400'> Login Page </Link></p>
 
                         <h3 className='font-bold mt-2 text-xl'>Admin Vendor One </h3>
-                        <p> Email : v1@vone.com </p>
+                        <p> Email : admin@vone.com </p>
                         <p> Password : 123456 </p>
 
                         <h3 className='font-bold mt-2 text-xl'>Admin Vendor Two </h3>
-                        <p> Email : v1@vtwo.com </p>
+                        <p> Email : admin@vtwo.com </p>
                         <p> Password : 123456 </p>
 
                         <h3 className='font-bold mt-2 text-xl'>Admin Vendor Three </h3>
-                        <p> Email : v1@vthree.com </p>
+                        <p> Email : admin@vthree.com </p>
                         <p> Password : 123456 </p>
                     </div>
                 </div>
