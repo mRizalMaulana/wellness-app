@@ -108,13 +108,25 @@ const ModalDetail = () => {
                                             </label>
                                         </div>
 
+                                        {
+                                            !!booking.reject_reason && 
+                                                <div className='mt-2'>
+                                                    <label className="block">
+                                                        <span className="text-gray-700">Reject Reason</span>
+                                                        <div className='mt-1 py-2 pl-4 border border-gray-300 rounded-md'>
+                                                            {booking.reject_reason}
+                                                        </div>
+                                                    </label>
+                                                </div>
+                                        }
+
                                     </div>
                                 </div>
 
                                 <div className='flex flex-wrap justify-center content-center'>
                                     <div className='w-11/12'>
                                         {
-                                            !booking.is_reject && 
+                                            !booking.confirmed_date && 
                                                 <Fragment>
                                                     <div className='mt-2'>
                                                         <label className="block">
@@ -143,23 +155,13 @@ const ModalDetail = () => {
                                                 </Fragment>
                                         }
 
-                                        {
-                                            !!booking.reject_reason && 
-                                                <div className='mt-2'>
-                                                    <label className="block">
-                                                        <span className="text-gray-700">Proposed Date 3</span>
-                                                        <div className='mt-1 py-2 pl-4 border border-gray-300 rounded-md'>
-                                                            {booking.reject_reason}
-                                                        </div>
-                                                    </label>
-                                                </div>
-                                        }
+                                        
 
                                         {
                                             !!booking.confirmed_date && 
                                                 <div className='mt-2'>
                                                     <label className="block">
-                                                        <span className="text-gray-700">Proposed Date 3</span>
+                                                        <span className="text-gray-700">Proposed Confirmed Date</span>
                                                         <div className='mt-1 py-2 pl-4 border border-gray-300 rounded-md'>
                                                             <FormatDate date={booking.confirmed_date} /> 
                                                         </div>

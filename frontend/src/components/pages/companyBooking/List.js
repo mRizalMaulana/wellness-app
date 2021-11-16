@@ -56,7 +56,7 @@ const List = () => {
                                     Status
                                 </th>
                                 <th className="px-6 py-2 text-xs text-gray-500">
-                                    Confirmed at
+                                    Proposed Confirmed Date
                                 </th>
                                 <th className="px-6 py-2 text-xs text-gray-500">
                                     Created at

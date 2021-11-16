@@ -151,7 +151,7 @@ const ModalDetail = () => {
                                             !!booking.confirmed_date && 
                                                 <div className='mt-2'>
                                                     <label className="block">
-                                                        <span className="text-gray-700">Confirmed at</span>
+                                                        <span className="text-gray-700">Proposed Confirmed Date</span>
                                                         <div className='mt-1 py-2 pl-4 border border-gray-300 rounded-md'>
                                                             <FormatDate date={booking.confirmed_date} />
                                                         </div>
